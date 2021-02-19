@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
+          integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw=="
+          crossorigin="anonymous"/>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.12.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+             crossorigin="anonymous"></script>-->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+    integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"
+    integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ=="
+    crossorigin="anonymous"></script>
+    <script src="modules/angular.js" type="text/javascript"></script>
+    <script src="modules/angular-mocks.js"></script>
+    <script src="modules/angular-resource.js"></script>
+    <script src="script.js"></script>
+</head>
+<body ng-app="app" ng-controller="myCtrl">
+    <div class="wrapper">
+        <form name="forminputs">
+            <div class="form-part">
+                <div class="form-part--sign">
+                    FCR
+                </div>
+                <div class="form-part--inputs">
+                        <div class="top-side-wrapper">
+                            <div class="form-part--inputs left--side">
+                                <div class="label-input" id="customerWrapper">
+                                    <label for="customer">Customer</label>
+                                    <input id="customer" ng-model="fcrForm.customer.customerValue" auto-complete
+                                           placeholder="TestClient1" ng-required="true">
+                                    <span class="ui-icon ui-icon-triangle-1-s" id="showList"></span>
+                                </div>
+                                <div class="label-input">
+                                    <label for="jobName">Job Name</label>
+                                    <input id="jobName" ng-model="fcrForm.customer.jobNameValue" placeholder="Job1" ng-required="true">
+                                </div>
+                                <div class="label-input">
+                                    <label for="project">Project</label>
+                                    <input id="project" ng-model="fcrForm.customer.projectValue" placeholder="Project1"
+                                           ng-required="true">
+                                </div>
+                            </div>
+                            <div class="form-part--inputs right--side">
+                                <div class="label-input">
+                                    <label for="order">Purchase Order No.:</label>
+                                    <input id="order" ng-model="fcrForm.customer.orderValue" placeholder="ORDER123" ng-required="true">
+                                </div>
+
+                                <div class="label-input">
+                                    <label for="sap">SAP #</label>
+                                    <input id="sap" ng-model="fcrForm.customer.sapValue" placeholder="SAP123" ng-required="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bottom-part-wrapper">
+                            <div class="date-input">
+                                <label for="datepicker">Date</label>
+                                <input type="text"
+                                       id="datepicker"
+                                       ng-required="true"
+                                       autocomplete="off"
+                                       ng-model="fcrForm.customer.datepicker"
+                                       data-date-format="DD, MM d, yyyy"
+                                       date-picker
+                                >
+        <!--  test span-->      <span>{{fcrForm.customer.datepicker}}  this form valid: {{forminputs.$valid}}<button ng-click="openForm()">saved</button></span>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="table-part">
+                <table  class="table table-bordered">
+                    <thead class="thead-default">
+                        <tr class="table-sign ">
+                            <th colspan="10">Employees</th>
+                        </tr>
+                        <tr class="table-head" >
+                            <th rowspan="2">Name</th>
+                            <th rowspan="2">Classification</th>
+                            <th colspan="3">Normal Time</th>
+                            <th colspan="3">Double time</th>
+                            <th rowspan="2">Per Diem</th>
+                            <th rowspan="2">Total Cost
+                                <div class="rightElInTableHead">
+                                    <div ng-click="addEmployee()" class="plusButton">+</div>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr class="table-head">
+                            <th>Hrs.</th>
+                            <th>Rate</th>
+                            <th>Amount</th>
+                            <th>Hrs.</th>
+                            <th>Rate</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr one-employee-row ng-repeat="employee in fcrForm.employees" employee="employee" index="$index" fcrForm="fcrForm"></tr>
+                        <tr class="total-row">
+                            <td colspan="2">Totals:</td>
+                            <td class=>{{fcrForm.totalNormalTimeHrs}}</td>
+                            <td colspan="2">{{fcrForm.totalNormalTimeAmount}}</td>
+                            <td>{{fcrForm.totalDoubleTimeHrs}}</td>
+                            <td colspan="2">{{fcrForm.totalDoubleTimeAmount}}</td>
+                            <td>{{fcrForm.totalPerDiem}}</td>
+                            <td>{{fcrForm.totalPrice}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button ng-click="test()">test</button>
+            </div>
+            <div class="comment-part">
+                <div class="comment-part--sign">Comments</div>
+                <textarea rows="6" ng-model="fcrForm.comment"></textarea>
+            </div>
+            <div class="bottom-part">
+                <div class="bottom-part--left-side">
+                    <label for="prepared">Prepared by: </label>
+                    <input id="prepared" name="prepared" type="text" placeholder="John Doe" ng-required="true" ng-model="fcrForm.prepared">
+                </div>
+                <div class="bottom-part--right-side">
+                    <div>Total Cost: {{tableObj.totalPrice}}</div>
+                    <div>
+                        <button class="btn btn-warning btn-sm">Download report</button>
+                        <button class="btn btn-warning btn-sm" >Submit</button>
+                        <button class="btn btn-success btn-sm" ng-disabled="!forminputs.$valid" ng-click="saveFormFunc()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
