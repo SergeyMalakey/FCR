@@ -6,14 +6,18 @@ body {
     padding: 5px;
 }
 
-.wrapper > div {
-    padding-bottom: 15px;
+Form > div {
+    margin-bottom: 20px;
 }
 
 .form-part {
     display: flex;
     flex-direction: column;
-    font-weight: bold;
+}
+
+.form-control {
+    border-color: black;
+    border-radius: 0;
 }
 
 .form-part--sign {
@@ -35,6 +39,10 @@ body {
     justify-content: space-between;
 }
 
+.datepicker-wrapper {
+    width: 75%;
+}
+
 .label-input {
     display: flex;
     justify-content: space-between;
@@ -46,15 +54,15 @@ body {
     width: 75%;
 }
 
-.label-input label{
-
-}
-
 .right--side {
-    width: 37%;                 /* // shrink*/
+    width: 37%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+}
+
+.input-wrapper {
+    height: 50%;
+    text-align: start;
 }
 
 .right--side .label-input input {
@@ -64,13 +72,6 @@ body {
 .top-side-wrapper {
     display: flex;
     justify-content: space-between;
-}
-
-.bottom-part-wrapper {
-}
-
-.date-input {
-    padding: 5px; /* do not work*/
 }
 
 #customerWrapper {
@@ -83,20 +84,17 @@ body {
     top: 13px;
 }
 
-#datepicker {
-    padding: 2px;
-}
-
-.label-input label:before,
-.date-input label:before {
+.label-input label:before {
     content: "*";
     color: red;
 }
-
                                     /*table */
 .table {
     width: calc(100% - 25px);
     border: 1px solid black;
+}
+.colName{
+    width: 25%;
 }
 table.table-bordered{
     border:1px solid black;
@@ -115,7 +113,7 @@ table.table-bordered > tbody > tr > td{
 
 .table-sign th {
     text-align: center;
-    font-weight: bold;
+    font-weight: 700;
     margin: auto;
 }
 
@@ -125,7 +123,6 @@ table.table-bordered > tbody > tr > td{
 
 .table-head th {
     padding: 5px;
-
     text-align: center;
 }
 
@@ -174,12 +171,11 @@ input::-webkit-inner-spin-button {
 
 .minusButton {
     position: absolute;
-    right: -20px;
-    top: 0;
+    right: -28px;
+    top: -2px;
     color: red;
     cursor: pointer;
-    font-size: 12px;
-    font-weight: 800;
+    font-weight: 900;
 }
 
 .rightElInTableHead {
@@ -188,22 +184,20 @@ input::-webkit-inner-spin-button {
 
 .plusButton {
     position: absolute;
-    right: -21px;
+    right: -28px;
     top: -40px;
     color: green;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 900;
     font-size: 20px;
 }
 
 .total-row {
-    font-weight: bold;
+    font-weight: 900;
 }
 
                                     /*comment part*/
 
-.comment-part {
-}
 
 .comment-part textarea {
     width: 100%;
@@ -213,7 +207,7 @@ input::-webkit-inner-spin-button {
     text-align: center;
     background-color: red;
     color: white;
-    font-weight: bold;
+    font-weight: 900;
     border-top: 1px black solid;
     border-left: 1px black solid;
     border-right: 1px black solid;
@@ -221,28 +215,45 @@ input::-webkit-inner-spin-button {
 }
                                       /*  bottom-part*/
 
-.bottom-part{
+.bottom-part {
     display: flex;
     justify-content: space-between;
 }
-.bottom-part--left-side{
+
+.bottom-part--left-side {
+    width: 40%;
+}
+
+.bottom-part--left-side div {
     display: flex;
     align-items: center;
-}
-.bottom-part--left-side div{
-    margin-right: 5px;
-    font-weight: bold;
-
+    margin: 5px;
+    width: 100%;
 }
 
-.bottom-part--left-side div:before{
+.bottom-part--left-side .form-control {
+    margin-left: 15px;
+    width: 50%;
+}
+
+.bottom-part--left-side div:before {
     content: "*";
     color: red;
 }
-.bottom-part--right-side{
-    font-weight: bold;
-    font-size: 18px;
+
+.bottom-part--right-side {
+    padding: 5px;
 }
-.btn .btn-warning{
-    color: white;
+
+.bottom-part--right-side button {
+    margin: 3px;
 }
+
+.total-cost {
+    font-weight: 800;
+    font-size: 20px;
+    text-align: right;
+    padding-right: 30px;
+    padding-bottom: 10px;
+}
+

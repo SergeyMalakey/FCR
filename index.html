@@ -37,7 +37,6 @@
 </head>
 <body ng-app="app" ng-controller="myCtrl">
     <div class="wrapper">
-
         <span>{{      fcrForm.customer.datepicker    }}  this form valid: {{forminputs.$valid}}  <button ng-click="test()">test</button></span>
         <form name="forminputs">
             <div class="form-part">
@@ -45,25 +44,26 @@
                     FCR
                 </div>
                 <div class="form-part--inputs">
-                        <div class="top-side-wrapper">
-                            <div class="form-part--inputs left--side">
-                                <div class="label-input" id="customerWrapper">
-                                    <label for="customer">Customer</label>
-                                    <input id="customer" class="form-control"  ng-model="fcrForm.customer.customerValue" auto-complete
-                                           placeholder="TestClient1" ng-required="true">
-                                    <span class="ui-icon ui-icon-triangle-1-s" id="showList"></span>
-                                </div>
-                                <div class="label-input">
-                                    <label for="jobName">Job Name</label>
-                                    <input id="jobName" class="form-control" ng-model="fcrForm.customer.jobNameValue" placeholder="Job1" ng-required="true">
-                                </div>
-                                <div class="label-input">
-                                    <label for="project">Project</label>
-                                    <input id="project" class="form-control" ng-model="fcrForm.customer.projectValue" placeholder="Project1"
-                                           ng-required="true">
-                                </div>
-                                <div class="date-input">
-                                    <label for="datepicker">Date</label>
+                    <div class="top-side-wrapper">
+                        <div class="form-part--inputs left--side">
+                            <div class="label-input" id="customerWrapper">
+                                <label for="customer">Customer</label>
+                                <input id="customer" class="form-control"  ng-model="fcrForm.customer.customerValue" auto-complete
+                                       placeholder="TestClient1" ng-required="true">
+                                <span class="ui-icon ui-icon-triangle-1-s" id="showList"></span>
+                            </div>
+                            <div class="label-input">
+                                <label for="jobName">Job Name</label>
+                                <input id="jobName" class="form-control" ng-model="fcrForm.customer.jobNameValue" placeholder="Job1" ng-required="true">
+                            </div>
+                            <div class="label-input">
+                                <label for="project">Project</label>
+                                <input id="project" class="form-control" ng-model="fcrForm.customer.projectValue" placeholder="Project1"
+                                       ng-required="true">
+                            </div>
+                            <div class="label-input">
+                                <label for="datepicker">Date</label>
+                                <div class="datepicker-wrapper">
                                     <input type="text"
                                            id="datepicker"
                                            ng-required="true"
@@ -75,24 +75,23 @@
                                     >
                                 </div>
 
-
                             </div>
-
-
-                            <div class="form-part--inputs right--side">
+                        </div>
+                        <div class="form-part--inputs right--side">
+                            <div class="input-wrapper">
                                 <div class="label-input">
                                     <label for="order">Purchase Order No.:</label>
                                     <input id="order" class="form-control" ng-model="fcrForm.customer.orderValue" placeholder="ORDER123" ng-required="true">
                                 </div>
+                            </div>
+                            <div class="input-wrapper">
                                 <div class="label-input">
                                     <label for="sap">SAP #</label>
                                     <input id="sap" class="form-control" ng-model="fcrForm.customer.sapValue" placeholder="SAP123" ng-required="true">
                                 </div>
                             </div>
                         </div>
-                       <!-- <div class="bottom-part-wrapper">
-
-                        </div>-->
+                    </div>
                 </div>
             </div>
             <div class="table-part">
@@ -102,7 +101,7 @@
                             <th colspan="10">Employees</th>
                         </tr>
                         <tr class="table-head" >
-                            <th rowspan="2" style="vertical-align: middle">Name</th>
+                            <th rowspan="2" class="colName" style="vertical-align: middle">Name</th>
                             <th rowspan="2" style="vertical-align: middle">Classification</th>
                             <th colspan="3">Normal Time</th>
                             <th colspan="3">Double time</th>
@@ -142,13 +141,15 @@
             </div>
             <div class="bottom-part">
                 <div class="bottom-part--left-side">
-                    <label for="prepared">Prepared by: </label>
-                    <input id="prepared" name="prepared" type="text" placeholder="John Doe" ng-required="true" ng-model="fcrForm.prepared">
+                    <div >
+                        <label for="prepared">Prepared by: </label>
+                        <input id="prepared" name="prepared" class="form-control" type="text" placeholder="John Doe" ng-required="true" ng-model="fcrForm.prepared">
+                    </div>
                 </div>
                 <div class="bottom-part--right-side">
-                    <div>Total Cost: {{tableObj.totalPrice}}</div>
+                    <div class="total-cost">Total Cost: {{fcrForm.totalPrice}}</div>
                     <div>
-                        <button type="button" class="btn btn-warning btn-sm">Download report</button>
+                        <button  class="btn btn-warning btn-sm">Download report</button>
                         <button type="button" class="btn btn-warning btn-sm" ng-click="saveFormFunc()" >Submit</button>
                         <button type="button" class="btn btn-success btn-sm" ng-disabled="!forminputs.$valid" ng-click="saveFormFunc()">Save</button>
                     </div>

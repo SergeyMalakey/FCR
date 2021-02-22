@@ -56,8 +56,14 @@
         $scope.openForm()
 
         $scope.saveFormFunc = function () {
-            SaveForm.putForm($scope.fcrForm, function (response){
-            })
+            SaveForm.putForm($scope.fcrForm).$promise.then(function (res) {
+                debugger;
+            },
+                function (err) {
+                    debugger;
+                }
+                )
+
         }
         $scope.test = function () {
             console.log($scope.fcrForm.employees);
@@ -188,7 +194,7 @@
             jobNameValue: "job1",
             projectValue: "project1",
             datepicker: 1602908000000,
-            orderValue: "1",
+            orderValue: "Order1",
             sapValue: "sap123"
         };
         let employees = [
@@ -238,15 +244,14 @@
                 comment: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
                 prepared: "John Doe",
             };
-
         $httpBackend.whenGET('http://localhost:3001/forms').respond(200, fcrForm);
         $httpBackend.whenPUT('http://localhost:3001/forms').respond(function (method, url, data) {
-            return [200, fcrForm, {}];
+            return [200];
         });
         $httpBackend.whenPOST('http://localhost:3001/forms').respond(function (method, url, data) {
+            debugger;
             return [200, fcrForm, {}];
         });
-
         $httpBackend.whenPOST('http://localhost:3001/customers').respond(function (method, url, data) {
             let filtredValue = [];
             if (data === "c") {
