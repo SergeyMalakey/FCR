@@ -47,25 +47,17 @@
 
         $scope.openForm = function () {
             ResourceMock.get().$promise.then(function (response) {
-                $scope.FcrObjStructuring(response)
-                /* debugger;   */                                         // invokes 5 times in a row ?!!!
+                $scope.fcrForm.employees = response.employees;
+                $scope.fcrForm.comment = response.comment;
+                $scope.fcrForm.prepared = response.prepared;
+                $scope.fcrForm.customer = response.customer;
             });
         }
         $scope.openForm()
 
-        $scope.FcrObjStructuring = function (response){
-            $scope.fcrForm.employees = response.employees;
-            $scope.fcrForm.comment = response.comment;
-            $scope.fcrForm.prepared = response.prepared;
-            $scope.fcrForm.customer = response.customer;
-        }
-
         $scope.saveFormFunc = function () {
             SaveForm.putForm($scope.fcrForm, function (response){
-                $scope.FcrObjStructuring(response)
-                debugger;
             })
-          /*  $scope.openForm()*/
         }
         $scope.test = function () {
             console.log($scope.fcrForm.employees);
@@ -73,7 +65,7 @@
         };
     });
 
-    app.directive("oneEmployeeRow", function () {
+    app.directive("oneEmployeeRow", function (){
         return {
             controller: "myCtrl",
             restrict: "AE",
@@ -166,7 +158,6 @@
             controller: "myCtrl",
             restrict: 'AE',
             link: function ($scope, element, attrs) {
-
                 $(element).autocomplete({
                     source: async function (request, response) {
                         AutocompletePostSource.postArr(request.term, function (res) {
@@ -176,8 +167,13 @@
                     delay: 100,
                     autofocus: true,
                     minLength: 0,
+                    select: function (event, ui){
+                        $scope.fcrForm.customer.customerValue = ui.item.value
+                    }
                 });
-                /*$scope.apply()*/  //to provide ordered field
+                $("#customer").click(function (){
+                    $scope.$apply()
+                })
                 $("#showList").click(function () {
                     $(element).autocomplete("search", "");
                 });
@@ -235,7 +231,7 @@
                     rate: 2
                 }
             }];
-        var fcrForm =
+        let fcrForm =
             {
                 customer: customer,
                 employees: employees,
@@ -244,11 +240,11 @@
             };
 
         $httpBackend.whenGET('http://localhost:3001/forms').respond(200, fcrForm);
-
         $httpBackend.whenPUT('http://localhost:3001/forms').respond(function (method, url, data) {
-            debugger;
-            fcrForm = JSON.parse(data)
-            return [200, fcrForm, {}]
+            return [200, fcrForm, {}];
+        });
+        $httpBackend.whenPOST('http://localhost:3001/forms').respond(function (method, url, data) {
+            return [200, fcrForm, {}];
         });
 
         $httpBackend.whenPOST('http://localhost:3001/customers').respond(function (method, url, data) {

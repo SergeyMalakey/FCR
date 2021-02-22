@@ -39,10 +39,15 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 5px;
+    align-items: center;
 }
 
 .label-input input {
     width: 75%;
+}
+
+.label-input label{
+
 }
 
 .right--side {
@@ -111,6 +116,7 @@ table.table-bordered > tbody > tr > td{
 .table-sign th {
     text-align: center;
     font-weight: bold;
+    margin: auto;
 }
 
 .table-head {
@@ -119,8 +125,8 @@ table.table-bordered > tbody > tr > td{
 
 .table-head th {
     padding: 5px;
+
     text-align: center;
-    vertical-align:middle;
 }
 
 td {
