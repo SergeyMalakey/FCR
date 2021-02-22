@@ -7,10 +7,25 @@
         }
     ]);
 
+    app.factory("AutocompletePostSource", [
+        "$resource", function ($resource) {
+            return $resource("http://localhost:3001/customers", {},
+                {postArr: {method: "POST", params: {}, isArray: true}}
+            )
+        }
+    ]);
+
+    app.factory("SaveForm", [
+        "$resource", function ($resource) {
+            return $resource("http://localhost:3001/forms", {}, {
+                putForm: {method: "PUT", params: {}, isArray: false}
+            })
+        }
+    ])
+
     app.controller("myCtrl", function ($scope, $http, ResourceMock, SaveForm) {
         $scope.fcrForm = {};
         $scope.delEmployee = function (index) {
-
             $scope.$parent.$parent.fcrForm.employees.splice(index, 1);
         };                        // scope.fcrForm??????
         $scope.addEmployee = function () {
@@ -28,21 +43,29 @@
                 perDiem: 0,
                 totalCost: 0
             });
-
         }
 
         $scope.openForm = function () {
             ResourceMock.get().$promise.then(function (response) {
-              /*  debugger;*/
-                $scope.fcrForm.employees = response.employees;
-                $scope.fcrForm.comment = response.comment;
-                $scope.fcrForm.prepared = response.prepared;
-                $scope.fcrForm.customer = response.customer;
+                $scope.FcrObjStructuring(response)
+                /* debugger;   */                                         // invokes 5 times in a row ?!!!
             });
         }
         $scope.openForm()
+
+        $scope.FcrObjStructuring = function (response){
+            $scope.fcrForm.employees = response.employees;
+            $scope.fcrForm.comment = response.comment;
+            $scope.fcrForm.prepared = response.prepared;
+            $scope.fcrForm.customer = response.customer;
+        }
+
         $scope.saveFormFunc = function () {
-            SaveForm.putForm($scope.fcrForm)
+            SaveForm.putForm($scope.fcrForm, function (response){
+                $scope.FcrObjStructuring(response)
+                debugger;
+            })
+          /*  $scope.openForm()*/
         }
         $scope.test = function () {
             console.log($scope.fcrForm.employees);
@@ -138,41 +161,15 @@
         }
     });
 
-    app.factory("SaveForm", [
-        "$resource", function ($resource) {
-            return $resource("http://localhost:3001/forms", {}, {
-                putForm: {method: "PUT", params: {}, isArray: false}
-            })
-        }
-    ])
-
-    app.factory("AutocompletePostSource", [
-        "$resource", function ($resource) {
-            return $resource("http://localhost:3001/customers", {},
-                {postArr: {method: "POST", params: {}, isArray: true}}
-            )
-        }
-    ]);
-
-    app.directive("autoComplete", ["$http", "AutocompletePostSource", function ($http, AutocompleteGetSource) {              // use resource
+    app.directive("autoComplete", ["$http", "AutocompletePostSource", function ($http, AutocompletePostSource) {              // use resource
         return {
             controller: "myCtrl",
             restrict: 'AE',
             link: function ($scope, element, attrs) {
-                /*debugger;*/
+
                 $(element).autocomplete({
                     source: async function (request, response) {
-                        /*let result = await $http(
-                            {
-                                url: 'http://localhost:3001/customers',
-                                method: "POST",
-                                data: request.term,
-                            }
-                        )
-                            .then(function (res) {
-                                response(res.data)
-                            })*/
-                        AutocompleteGetSource.postArr(request.term, function (res) {
+                        AutocompletePostSource.postArr(request.term, function (res) {
                             response(res)
                         })   //resource + body + succesFunc
                     },
@@ -187,6 +184,7 @@
             }
         }
     }]);
+
     app.run(function ($httpBackend) {
         let customers = ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"];
         let customer = {
