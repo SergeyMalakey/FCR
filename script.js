@@ -1,4 +1,5 @@
 (function () {
+    // components
     const app = angular.module("app", ["ngMockE2E", "ngResource"]);
 
     app.factory("AutocompleteFactory", [
