@@ -3,21 +3,24 @@
 
     app.factory("AutocompleteFactory", [
         "$resource", function ($resource) {
-            return $resource("http://localhost:3001/customers/:term", {term:""},
+            return $resource("http://localhost:3001/customers/:term", {term: ""},
             )
         }
     ]);
 
     app.factory("FcrFactory", [
         "$resource", function ($resource) {
-            return $resource("http://localhost:3001/fcr/:id",{id:1},
-                {putFcrForm: {method: "PUT", params: {}, isArray: true},
-                 postFcrForm: {method: "POST", params: {}, isArray: true}}
+            return $resource("http://localhost:3001/fcr/:id", {id: 1},
+                {
+                    putFcrForm: {method: "PUT", params: {}, isArray: true},
+                    postFcrForm: {method: "POST", params: {}, isArray: true}
+                }
             );
         }
     ]);
 
     app.controller("myCtrl", function ($scope, $http, FcrFactory) {
+
         $scope.fcrForm = {};
 
         $scope.addEmployee = function () {
@@ -39,27 +42,51 @@
 
         $scope.fetchFcrForm = function () {
             FcrFactory.get().$promise.then(function (response) {
-                /*$scope.fcrForm.employees = response.employees;
-                $scope.fcrForm.comment = response.comment;
-                $scope.fcrForm.prepared = response.prepared;
-                $scope.fcrForm.customer = response.customer;*/
-                $scope.fcrForm = response;                            // took a resource object with Promise fields
+                $scope.fcrForm = response;      // took a resource object with Promise fields
             });
         };
-        $scope.fetchFcrForm();
 
         $scope.saveFcrForm = function () {
-            FcrFactory.putFcrForm($scope.fcrForm , function (data){
-                console.log("response status code ",data[0])
+            FcrFactory.putFcrForm($scope.fcrForm, function (data) {
+                console.log("response status code ", data[0])
             },)
         };
+
+        $scope.$watch(function () {
+
+            $scope.fcrForm.totalNormalTimeHrs = 0;
+            $scope.fcrForm.totalDoubleTimeHrs = 0;
+            $scope.fcrForm.totalNormalTimeAmount = 0;
+            $scope.fcrForm.totalDoubleTimeAmount = 0;
+            $scope.fcrForm.totalPerDiem = 0;
+            $scope.fcrForm.totalPrice = 0;
+
+            if ($scope.fcrForm.employees) {
+
+                $scope.fcrForm.employees.forEach(function calculateTotalValues(item) {
+                    $scope.fcrForm.totalNormalTimeHrs += item.normalTime.hrs
+                    $scope.fcrForm.totalDoubleTimeHrs += item.doubleTime.hrs;
+                    $scope.fcrForm.totalNormalTimeAmount += item.normalAmount;
+                    $scope.fcrForm.totalDoubleTimeAmount += item.doubleAmount;
+                    $scope.fcrForm.totalPerDiem += item.perDiem;
+                    $scope.fcrForm.totalPrice += item.totalCost;
+                });
+            }
+        });
 
         $scope.test = function () {
             console.log($scope.fcrForm);
         };
+
+        $scope.init = function () {
+            $scope.fetchFcrForm();
+        };
+
+        $scope.init();
     });
 
-    app.directive("oneEmployeeRow", function (){
+    app.directive("oneEmployeeRow", function () {
+
         return {
             restrict: "AE",
             replace: true,
@@ -70,118 +97,32 @@
             },
             templateUrl: "one-employee-table-directive.html",
             link: function ($scope, element, attrs, fcrForm) {
+
                 $scope.deleteEmployee = function (index) {
                     $scope.fcrForm.employees.splice(index, 1);
                 };
-                /*$scope.$watch("$scope.fcrForm.employees",
-                    function (newVal, oldVal, scope) {
 
-                        $scope.employee.normalAmount = $scope.employee.normalTime.hrs * $scope.employee.normalTime.rate;
-                        $scope.employee.doubleAmount = $scope.employee.doubleTime.hrs * $scope.employee.doubleTime.rate;
-                        $scope.employee.totalCost = $scope.employee.normalAmount + $scope.employee.doubleAmount + $scope.employee.perDiem;
-                        $scope.fcrForm.totalNormalTimeHrs = 0;
-                        $scope.fcrForm.totalDoubleTimeHrs = 0;
-                        $scope.fcrForm.totalNormalTimeAmount = 0;
-                        $scope.fcrForm.totalDoubleTimeAmount = 0;
-                        $scope.fcrForm.totalPerDiem = 0;
-                        $scope.fcrForm.totalPrice = 0;
-
-                        $scope.fcrForm.employees.forEach(function calculateTotalValues(item) {
-                            $scope.fcrForm.totalNormalTimeHrs += item.normalTime.hrs
-                            $scope.fcrForm.totalDoubleTimeHrs += item.doubleTime.hrs;
-                            $scope.fcrForm.totalNormalTimeAmount += item.normalAmount;
-                            $scope.fcrForm.totalDoubleTimeAmount += item.doubleAmount;
-                            $scope.fcrForm.totalPerDiem += item.perDiem;
-                            $scope.fcrForm.totalPrice += item.totalCost;
-                        });
-                    }
-                    )*/
-
-                $scope.$watch($scope.fcrForm.employees,
-                    function (newVal, oldVal, scope) {
-
-                        $scope.employee.normalAmount = $scope.employee.normalTime.hrs * $scope.employee.normalTime.rate;
-                        $scope.employee.doubleAmount = $scope.employee.doubleTime.hrs * $scope.employee.doubleTime.rate;
-                        $scope.employee.totalCost = $scope.employee.normalAmount + $scope.employee.doubleAmount + $scope.employee.perDiem;
-                        $scope.fcrForm.totalNormalTimeHrs = 0;
-                        $scope.fcrForm.totalDoubleTimeHrs = 0;
-                        $scope.fcrForm.totalNormalTimeAmount = 0;
-                        $scope.fcrForm.totalDoubleTimeAmount = 0;
-                        $scope.fcrForm.totalPerDiem = 0;
-                        $scope.fcrForm.totalPrice = 0;
-
-                        $scope.fcrForm.employees.forEach(function calculateTotalValues(item) {
-                            $scope.fcrForm.totalNormalTimeHrs += item.normalTime.hrs
-                            $scope.fcrForm.totalDoubleTimeHrs += item.doubleTime.hrs;
-                            $scope.fcrForm.totalNormalTimeAmount += item.normalAmount;
-                            $scope.fcrForm.totalDoubleTimeAmount += item.doubleAmount;
-                            $scope.fcrForm.totalPerDiem += item.perDiem;
-                            $scope.fcrForm.totalPrice += item.totalCost;
-                        });
-                    },true
-                    )
-
-
-              /*  $scope.$watchCollection("$scope.fcrForm.employees",function (){
-                    debugger;
-                })*/
-/*
-                $scope.$watchGroup(
-                    [
-                        function () {
-                            return $scope.employee.normalTime.rate
-                        },
-                        function () {
-                            return $scope.employee.normalTime.hrs
-                        },
-                        function () {
-                            return $scope.employee.doubleTime.rate
-                        },
-                        function () {
-                            return $scope.employee.doubleTime.hrs
-                        },
-                        function () {
-                            return $scope.employee.perDiem
-                        },
-                        function () {
-                            return $scope.fcrForm.employees.length
-                        }
-                    ]
-                    ,
-                    function (newVal, oldVal, scope) {
-                        $scope.employee.normalAmount = $scope.employee.normalTime.hrs * $scope.employee.normalTime.rate;
-                        $scope.employee.doubleAmount = $scope.employee.doubleTime.hrs * $scope.employee.doubleTime.rate;
-                        $scope.employee.totalCost = $scope.employee.normalAmount + $scope.employee.doubleAmount + $scope.employee.perDiem;
-                        $scope.fcrForm.totalNormalTimeHrs = 0;
-                        $scope.fcrForm.totalDoubleTimeHrs = 0;
-                        $scope.fcrForm.totalNormalTimeAmount = 0;
-                        $scope.fcrForm.totalDoubleTimeAmount = 0;
-                        $scope.fcrForm.totalPerDiem = 0;
-                        $scope.fcrForm.totalPrice = 0;
-
-                        $scope.fcrForm.employees.forEach(function calculateTotalValues(item) {
-                            $scope.fcrForm.totalNormalTimeHrs += item.normalTime.hrs
-                            $scope.fcrForm.totalDoubleTimeHrs += item.doubleTime.hrs;
-                            $scope.fcrForm.totalNormalTimeAmount += item.normalAmount;
-                            $scope.fcrForm.totalDoubleTimeAmount += item.doubleAmount;
-                            $scope.fcrForm.totalPerDiem += item.perDiem;
-                            $scope.fcrForm.totalPrice += item.totalCost;
-                        });
-                    }
-                )*/
+                $scope.$watch(function (newVal, oldVal, scope) {
+                    $scope.employee.normalAmount = $scope.employee.normalTime.hrs * $scope.employee.normalTime.rate;
+                    $scope.employee.doubleAmount = $scope.employee.doubleTime.hrs * $scope.employee.doubleTime.rate;
+                    $scope.employee.totalCost = $scope.employee.normalAmount + $scope.employee.doubleAmount + $scope.employee.perDiem;
+                });
             }
         }
-    })
+    });
 
     app.directive("datePicker", function () {
+
         return {
             restrict: "AE",
             require: 'ngModel',
             controller: "myCtrl",
-            link: function ($scope, element, attrs, ngModelCtrl) {
-                ngModelCtrl.$parsers.unshift(function (viewValue) {
+            link: function ($scope, $element, $attrs, $ngModelCtrl) {
+
+                $ngModelCtrl.$parsers.unshift(function (viewValue) {
                     return +new Date(viewValue)
                 });
+
                 $scope.$watch(
                     function () {
                         if ($scope.fcrForm) {
@@ -189,10 +130,10 @@
                         }
                     },
                     function () {
-                        $(element).datepicker({
+                        $($element).datepicker({
                             format: "DD, MM d, yyyy"
                         })
-                        $(element).datepicker('setDate', new Date(Number.parseInt($scope.fcrForm.datepicker)))
+                        $($element).datepicker('setDate', new Date(Number.parseInt($scope.fcrForm.datepicker)))
                     }
                 );
             }
@@ -200,24 +141,25 @@
     });
 
     app.directive("autoComplete", ["$http", "AutocompleteFactory", function ($http, AutocompleteFactory) {
+
         return {
             controller: "myCtrl",
             restrict: 'AE',
             link: function ($scope, element, attrs) {
                 $(element).autocomplete({
                     source: function (request, response) {
-                        AutocompleteFactory.query({term:request.term}, function (res) {
-                            response(res)                              //resource + body + succesFunc
+                        AutocompleteFactory.query({term: request.term}, function (res) {
+                            response(res); // resource + body + succesFunc
                         })
                     },
                     delay: 100,
                     autofocus: true,
                     minLength: 0,
-                    select: function (event, ui){
+                    select: function (event, ui) {
                         $scope.fcrForm.customerName = ui.item.value
                     }
                 });
-                $("#customer").click(function (){
+                $("#customer").click(function () {
                     $scope.$apply()
                 });
                 $("#showList").click(function () {
@@ -228,7 +170,9 @@
     }]);
 
     app.run(function ($httpBackend) {
+
         let customers = ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"];
+
         let employees = [
             {
                 name: "Employee1",
@@ -269,6 +213,7 @@
                     rate: 2
                 }
             }];
+
         let fcrForm =
             {
                 customerName: "testClient1",
@@ -281,23 +226,25 @@
                 comment: "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
                 prepared: "John Doe",
             };
+
         $httpBackend.whenGET('http://localhost:3001/fcr/1').respond(200, fcrForm);
-        $httpBackend.whenPUT('http://localhost:3001/fcr/1').respond([200,{}]);
-        $httpBackend.whenPOST('http://localhost:3001/fcr/1').respond([200,{}]);
+        $httpBackend.whenPUT('http://localhost:3001/fcr/1').respond([200, {}]);
+        $httpBackend.whenPOST('http://localhost:3001/fcr/1').respond([200, {}]);
+
         $httpBackend.whenGET('http://localhost:3001/customers/c').respond(function (method, url, data) {
             let filtredValue = ["all", "values", "c", "request"]
             return [200, filtredValue, {}]
         });
-        $httpBackend.whenGET('http://localhost:3001/customers/d').respond(function (method, url, data){
-                let filtredValue = ["all", "values", "d", "request"]
-                return [200, filtredValue, {}]
+
+        $httpBackend.whenGET('http://localhost:3001/customers/d').respond(function (method, url, data) {
+            let filtredValue = ["all", "values", "d", "request"]
+            return [200, filtredValue, {}]
         });
-        $httpBackend.whenGET('http://localhost:3001/customers').respond(function (method, url, data){
+
+        $httpBackend.whenGET('http://localhost:3001/customers').respond(function (method, url, data) {
             return [200, customers, {}];
         });
+
         $httpBackend.whenGET(/\.html$/).passThrough();
-    })
+    });
 })()
-
-
-// customers.indexOf(data) != -1
