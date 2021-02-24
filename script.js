@@ -1,5 +1,5 @@
 (function () {
-    // components
+
     const app = angular.module("app", ["ngMockE2E", "ngResource"]);
 
     app.factory("AutocompleteFactory", [
@@ -84,9 +84,61 @@
         };
 
         $scope.init();
+
     });
 
-    app.directive("oneEmployeeRow", function () {
+
+
+
+
+    app.component("oneEmployeeRow",  {
+        restrict: "AE",
+        replace: true,
+        controller:EmployeeController,
+        bindings: {
+            employee: "=",
+            index: "=",
+            fcrForm: "=",
+        },
+        templateUrl: "one-employee-table-directive.html",
+    });
+
+    function EmployeeController (){
+        var vm = this
+        vm.greet = "say hi"
+
+        vm.func = function (){
+
+            this.deleteEmployee = function (index) {
+                this.fcrForm.employees.splice(index, 1);
+            };
+
+            this.$watch(function (newVal, oldVal, scope) {
+                this.employee.normalAmount = this.employee.normalTime.hrs * this.employee.normalTime.rate;
+                this.employee.doubleAmount = this.employee.doubleTime.hrs * this.employee.doubleTime.rate;
+                this.employee.totalCost = this.employee.normalAmount + this.employee.doubleAmount + this.employee.perDiem;
+            });
+        }
+        return vm
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*app.directive("oneEmployeeRow", function () {
 
         return {
             restrict: "AE",
@@ -110,7 +162,7 @@
                 });
             }
         }
-    });
+    });*/
 
     app.directive("datePicker", function () {
 
@@ -248,4 +300,21 @@
 
         $httpBackend.whenGET(/\.html$/).passThrough();
     });
+
+    app.component("firstComponent",{
+        restrict:"AE",
+        template:"<div>hi,how are you {{$vm.greet}} +</div>",
+        bindings:{
+            greet:"="
+        },
+        controller:ComponentController,
+        controllerAs: "vm"
+    })
+
+    function ComponentController (){
+        var vm = this
+        vm.greet = "say hi"
+        return vm
+    }
+
 })()
