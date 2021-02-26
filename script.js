@@ -20,12 +20,19 @@
         }
     ]);
 
-    app.controller("myCtrl", function ($scope, $http, FcrFactory) {
+    app.component("mainComponent", {
+        templateUrl: "main-component.html",
+        controller: "mainController",
+        controllerAs: "vm",
+    })
 
-        $scope.fcrForm = {};
+    app.controller("mainController", ["$scope", "FcrFactory", function ($scope, FcrFactory) {
 
-        $scope.addEmployee = function () {
-            $scope.fcrForm.employees.push({
+        var vm = this
+        vm.fcrForm = {};
+
+        vm.addEmployee = function () {
+            vm.fcrForm.employees.push({
                 name: "",
                 classification: "",
                 normalTime: {
@@ -41,136 +48,94 @@
             });
         };
 
-        $scope.fetchFcrForm = function () {
+        vm.fetchFcrForm = function () {
             FcrFactory.get().$promise.then(function (response) {
-                $scope.fcrForm = response;      // took a resource object with Promise fields
+                vm.fcrForm = response;      // took a resource object with Promise fields
             });
         };
 
-        $scope.saveFcrForm = function () {
-            FcrFactory.putFcrForm($scope.fcrForm, function (data) {
+        vm.saveFcrForm = function () {
+            FcrFactory.putFcrForm(vm.fcrForm, function (data) {
                 console.log("response status code ", data[0])
-            },)
+            })
         };
 
         $scope.$watch(function () {
 
-            $scope.fcrForm.totalNormalTimeHrs = 0;
-            $scope.fcrForm.totalDoubleTimeHrs = 0;
-            $scope.fcrForm.totalNormalTimeAmount = 0;
-            $scope.fcrForm.totalDoubleTimeAmount = 0;
-            $scope.fcrForm.totalPerDiem = 0;
-            $scope.fcrForm.totalPrice = 0;
+            vm.fcrForm.totalNormalTimeHrs = 0;
+            vm.fcrForm.totalDoubleTimeHrs = 0;
+            vm.fcrForm.totalNormalTimeAmount = 0;
+            vm.fcrForm.totalDoubleTimeAmount = 0;
+            vm.fcrForm.totalPerDiem = 0;
+            vm.fcrForm.totalPrice = 0;
 
-            if ($scope.fcrForm.employees) {
+            if (vm.fcrForm.employees) {
 
-                $scope.fcrForm.employees.forEach(function calculateTotalValues(item) {
-                    $scope.fcrForm.totalNormalTimeHrs += item.normalTime.hrs
-                    $scope.fcrForm.totalDoubleTimeHrs += item.doubleTime.hrs;
-                    $scope.fcrForm.totalNormalTimeAmount += item.normalAmount;
-                    $scope.fcrForm.totalDoubleTimeAmount += item.doubleAmount;
-                    $scope.fcrForm.totalPerDiem += item.perDiem;
-                    $scope.fcrForm.totalPrice += item.totalCost;
+                vm.fcrForm.employees.forEach(function calculateTotalValues(item) {
+                    vm.fcrForm.totalNormalTimeHrs += item.normalTime.hrs
+                    vm.fcrForm.totalDoubleTimeHrs += item.doubleTime.hrs;
+                    vm.fcrForm.totalNormalTimeAmount += item.normalAmount;
+                    vm.fcrForm.totalDoubleTimeAmount += item.doubleAmount;
+                    vm.fcrForm.totalPerDiem += item.perDiem;
+                    vm.fcrForm.totalPrice += item.totalCost;
                 });
             }
         });
 
-        $scope.test = function () {
-            console.log($scope.fcrForm);
+        vm.deleteEmployee = function (index) {
+            vm.fcrForm.employees.splice(index, 1);
         };
 
-        $scope.init = function () {
-            $scope.fetchFcrForm();
+        vm.test = function () {
+            console.log(vm.fcrForm);
         };
 
-        $scope.init();
+        vm.$onInit = function () {
+            vm.fetchFcrForm();
+        };
+    }])
 
-    });
-
-
-
-
-
-    app.component("oneEmployeeRow",  {
-        restrict: "AE",
-        replace: true,
-        controller:EmployeeController,
-        bindings: {
-            employee: "=",
-            index: "=",
-            fcrForm: "=",
-        },
-        templateUrl: "one-employee-table-directive.html",
-    });
-
-    function EmployeeController (){
-        var vm = this
-        vm.greet = "say hi"
-
-        vm.func = function (){
-
-            this.deleteEmployee = function (index) {
-                this.fcrForm.employees.splice(index, 1);
-            };
-
-            this.$watch(function (newVal, oldVal, scope) {
-                this.employee.normalAmount = this.employee.normalTime.hrs * this.employee.normalTime.rate;
-                this.employee.doubleAmount = this.employee.doubleTime.hrs * this.employee.doubleTime.rate;
-                this.employee.totalCost = this.employee.normalAmount + this.employee.doubleAmount + this.employee.perDiem;
-            });
-        }
-        return vm
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*app.directive("oneEmployeeRow", function () {
+    app.directive("oneEmployeeRow", function () {
 
         return {
-            restrict: "AE",
+            restrict: "A",
             replace: true,
-            scope: {
+            require: {
+                fcrCtrl: "^mainComponent"
+            },
+            scope: {},
+            bindToController: {
                 employee: "=",
                 index: "=",
-                fcrForm: "=",
             },
             templateUrl: "one-employee-table-directive.html",
-            link: function ($scope, element, attrs, fcrForm) {
+            controllerAs: "vm",
+            controller: ["$scope", function ($scope) {
+                var vm = this;
 
-                $scope.deleteEmployee = function (index) {
-                    $scope.fcrForm.employees.splice(index, 1);
+                vm.deleteEmployee = function (index) {
+                    vm.fcrCtrl.deleteEmployee(index)  // in parent controller use only methods! Do not address to variables
                 };
 
-                $scope.$watch(function (newVal, oldVal, scope) {
-                    $scope.employee.normalAmount = $scope.employee.normalTime.hrs * $scope.employee.normalTime.rate;
-                    $scope.employee.doubleAmount = $scope.employee.doubleTime.hrs * $scope.employee.doubleTime.rate;
-                    $scope.employee.totalCost = $scope.employee.normalAmount + $scope.employee.doubleAmount + $scope.employee.perDiem;
+                $scope.$watch(function () {
+                    vm.employee.normalAmount = vm.employee.normalTime.hrs * vm.employee.normalTime.rate;
+                    vm.employee.doubleAmount = vm.employee.doubleTime.hrs * vm.employee.doubleTime.rate;
+                    vm.employee.totalCost = vm.employee.normalAmount + vm.employee.doubleAmount + vm.employee.perDiem;
                 });
-            }
+            }]
         }
-    });*/
+    });
 
     app.directive("datePicker", function () {
 
         return {
-            restrict: "AE",
-            require: 'ngModel',
-            controller: "myCtrl",
-            link: function ($scope, $element, $attrs, $ngModelCtrl) {
+            restrict: "A",
+            require: ["ngModel", "^mainComponent"],
+
+            link: function ($scope, $element, $attrs, controllers) {
+
+                var $ngModelCtrl = controllers[0];
+                var fcrCtrl = controllers[1];
 
                 $ngModelCtrl.$parsers.unshift(function (viewValue) {
                     return +new Date(viewValue)
@@ -178,15 +143,15 @@
 
                 $scope.$watch(
                     function () {
-                        if ($scope.fcrForm) {
-                            return $scope.fcrForm.datepicker
+                        if (fcrCtrl.fcrForm) {
+                            return fcrCtrl.fcrForm.datepicker
                         }
                     },
                     function () {
-                        $($element).datepicker({
+                        $("#datepicker").datepicker({
                             format: "DD, MM d, yyyy"
-                        })
-                        $($element).datepicker('setDate', new Date(Number.parseInt($scope.fcrForm.datepicker)))
+                        });
+                        $($element).datepicker('setDate', new Date(Number.parseInt(fcrCtrl.fcrForm.datepicker)))
                     }
                 );
             }
@@ -196,9 +161,8 @@
     app.directive("autoComplete", ["$http", "AutocompleteFactory", function ($http, AutocompleteFactory) {
 
         return {
-            controller: "myCtrl",
             restrict: 'AE',
-            link: function ($scope, element, attrs) {
+            link: function ($scope, element) {
                 $(element).autocomplete({
                     source: function (request, response) {
                         AutocompleteFactory.query({term: request.term}, function (res) {
@@ -284,36 +248,33 @@
         $httpBackend.whenPUT('http://localhost:3001/fcr/1').respond([200, {}]);
         $httpBackend.whenPOST('http://localhost:3001/fcr/1').respond([200, {}]);
 
-        $httpBackend.whenGET('http://localhost:3001/customers/c').respond(function (method, url, data) {
+        $httpBackend.whenGET('http://localhost:3001/customers/c').respond(function () {
             let filtredValue = ["all", "values", "c", "request"]
             return [200, filtredValue, {}]
         });
 
-        $httpBackend.whenGET('http://localhost:3001/customers/d').respond(function (method, url, data) {
+        $httpBackend.whenGET('http://localhost:3001/customers/d').respond(function () {
             let filtredValue = ["all", "values", "d", "request"]
             return [200, filtredValue, {}]
         });
 
-        $httpBackend.whenGET('http://localhost:3001/customers').respond(function (method, url, data) {
+        $httpBackend.whenGET('http://localhost:3001/customers').respond(function () {
             return [200, customers, {}];
         });
 
         $httpBackend.whenGET(/\.html$/).passThrough();
     });
 
-    app.component("firstComponent",{
-        restrict:"AE",
-        template:"<div>hi,how are you {{$vm.greet}} +</div>",
-        bindings:{
-            greet:"="
-        },
-        controller:ComponentController,
+    app.component("firstComponent", {
+        restrict: "AE",
+        template: "<div>hi,how are you: {{vm.greet}}</div>",
+        controller: ComponentController,
         controllerAs: "vm"
     })
 
-    function ComponentController (){
+    function ComponentController() {
         var vm = this
-        vm.greet = "say hi"
+        vm.greet = "text from ComponentController"
         return vm
     }
 
