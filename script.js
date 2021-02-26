@@ -24,11 +24,12 @@
         templateUrl: "main-component.html",
         controller: "mainController",
         controllerAs: "vm",
-    })
+    });
 
     app.controller("mainController", ["$scope", "FcrFactory", function ($scope, FcrFactory) {
 
         var vm = this
+
         vm.fcrForm = {};
 
         vm.addEmployee = function () {
@@ -93,7 +94,7 @@
         vm.$onInit = function () {
             vm.fetchFcrForm();
         };
-    }])
+    }]);
 
     app.directive("oneEmployeeRow", function () {
 
