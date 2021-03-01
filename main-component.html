@@ -1,14 +1,16 @@
-<div class="wrapper">
+<div class="wrapper ">
     <!--<first-component></first-component>-->
     <span>{{vm.fcrForm.datepicker}}  this form valid: {{forminputs.$valid}}  <button ng-click="vm.test()">test</button></span>
+
     <form name="forminputs">
         <div class="form-part">
             <div class="form-part--sign">
                 FCR
             </div>
-            <div class="form-part--inputs">
-                <div class="top-side-wrapper">
-                    <div class="form-part--inputs left--side">
+            <div class="form-part--inputs">    <!--  class="form-part&#45;&#45;inputs"-->
+                <div class="row"> <!--  lass="top-side-wrapper"-->
+                    <div class="col-sm-7">
+                        <!-- class="form-part&#45;&#45;inputs left&#45;&#45;side-->
                         <div class="label-input" id="customerWrapper">
                             <label for="customer">Customer</label>
                             <input id="customer" class="form-control" ng-model="vm.fcrForm.customerName" auto-complete
@@ -41,25 +43,30 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-part--inputs right--side">
-                        <div class="input-wrapper">
+                    <div class="col-sm-5 he">
+
+                        <!--class="form-part&#45;&#45;inputs right&#45;&#45;side-->
+                        <div class="input-wrapper col-sm-12 ne">
                             <div class="label-input">
                                 <label for="order">Purchase Order No.:</label>
                                 <input id="order" class="form-control" ng-model="vm.fcrForm.order"
                                        placeholder="ORDER123" ng-required="true">
                             </div>
                         </div>
-                        <div class="input-wrapper">
+                        <div class="input-wrapper col-sm-12 ne">
                             <div class="label-input">
                                 <label for="sap">SAP #</label>
                                 <input id="sap" class="form-control" ng-model="vm.fcrForm.sap" placeholder="SAP123"
                                        ng-required="true">
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
+
+
         <div class="table-part">
             <table class="table table-bordered">
                 <thead class="thead-default">

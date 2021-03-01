@@ -10,10 +10,31 @@ Form > div {
     margin-bottom: 20px;
 }
 
-.form-part {
+.col-sm-5 .row {
+    height: 150px;
+}
+
+.he {
+    height: 100%;
+}
+
+.ne {
+    color: aqua;
+    height: 100%;
+}
+
+/*
+.form-part--inputs .right--side {
+    border: solid black 2px;
+    height: 100%;
+}
+*/
+
+/*.form-part {
     display: flex;
     flex-direction: column;
-}
+}*/
+/*
 
 .form-control {
     border-color: black;
@@ -78,7 +99,7 @@ Form > div {
 }
 
 .date-input {
-    padding: 5px; /* do not work*/
+    padding: 5px; !* do not work*!
 }
 
 #customerWrapper {
@@ -96,25 +117,32 @@ Form > div {
     content: "*";
     color: red;
 }
+*/
 
-                                    /*table */
+
+/*table */
 
 .table {
     width: calc(100% - 25px);
     border: 1px solid black;
 }
-.col-name{
+
+.col-name {
     width: 25%;
 }
-table.table-bordered{
-    border:1px solid black;
+
+table.table-bordered {
+    border: 1px solid black;
 }
-table.table-bordered > thead > tr > th{
-    border:1px solid black;
+
+table.table-bordered > thead > tr > th {
+    border: 1px solid black;
 }
-table.table-bordered > tbody > tr > td{
-    border:1px solid black;
+
+table.table-bordered > tbody > tr > td {
+    border: 1px solid black;
 }
+
 .table-sign {
     background-color: red;
     width: 100%;
@@ -207,7 +235,7 @@ input::-webkit-inner-spin-button {
     font-weight: bold;
 }
 
-                                    /*comment part*/
+/*comment part*/
 
 
 .comment-part textarea {
@@ -224,7 +252,8 @@ input::-webkit-inner-spin-button {
     border-right: 1px black solid;
     padding: 8px;
 }
-                                      /*  bottom-part*/
+
+/*  bottom-part*/
 .bottom-part {
     display: flex;
     justify-content: space-between;
@@ -266,6 +295,7 @@ input::-webkit-inner-spin-button {
     padding-right: 30px;
     padding-bottom: 10px;
 }
+
 .btn:focus {
     outline: none;
 }
