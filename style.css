@@ -9,19 +9,74 @@ body {
 Form > div {
     margin-bottom: 20px;
 }
-
-.col-sm-5 .row {
-    height: 150px;
+.form-part--inputs .row{      /*have to set height*/
+    height: 180px;
 }
-
-.he {
+.col-sm-5,.col-xs-12,.col-sm-7 {
+    padding-right: 10px;
+    padding-left: 10px;
     height: 100%;
 }
-
-.ne {
-    color: aqua;
-    height: 100%;
+.col-sm-12 {
+padding: 0;
 }
+
+.input-wrapper{
+    height: 50%;
+}
+.label-input {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    align-items: center;
+}
+
+.col-sm-12 .label-input input{
+    width: 60%;
+}
+.label-input input {
+    width: 75%;
+}
+
+.datepicker-wrapper {
+    width: 75%;
+
+}
+
+#customerWrapper {
+    position: relative;
+}
+
+.form-part--sign {
+    text-align: center;
+    background-color: red;
+    color: white;
+    padding: 8px;
+}
+
+#showList {
+    position: absolute;
+    right: 7px;
+    top: 13px;
+}
+
+.label-input label:before,
+.date-input label:before {
+    content: "*";
+    color: red;
+}
+
+/*.equal, .equal > div[class*='col-'] {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex:1 0 auto;
+}*/
+
 
 /*
 .form-part--inputs .right--side {
