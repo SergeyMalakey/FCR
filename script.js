@@ -1,5 +1,4 @@
 (function () {
-
     const app = angular.module("app", ["ngMockE2E", "ngResource"]);
 
     app.factory("AutocompleteFactory", [
@@ -28,7 +27,7 @@
 
     app.controller("mainController", ["$scope", "FcrFactory", function ($scope, FcrFactory) {
 
-        var vm = this
+        var vm = this;
 
         vm.fcrForm = {};
 
@@ -100,7 +99,6 @@
 
         return {
             restrict: "A",
-            replace: true,
             require: {
                 fcrCtrl: "^mainComponent"
             },
@@ -265,18 +263,5 @@
 
         $httpBackend.whenGET(/\.html$/).passThrough();
     });
-
-    app.component("firstComponent", {
-        restrict: "AE",
-        template: "<div>hi,how are you: {{vm.greet}}</div>",
-        controller: ComponentController,
-        controllerAs: "vm"
-    })
-
-    function ComponentController() {
-        var vm = this
-        vm.greet = "text from ComponentController"
-        return vm
-    }
 
 })()
