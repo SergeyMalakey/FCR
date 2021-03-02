@@ -10,6 +10,11 @@ Form > div {
     margin-bottom: 20px;
 }
 
+.form-control {
+    border-color: black;
+    border-radius: 0;
+}
+
 .form-part--inputs .row { /*have to set height*/
     height: 180px;
 }
@@ -20,12 +25,12 @@ Form > div {
     height: 100%;
 }
 
-.col-sm-12 {
-    padding: 0;
-}
-
 .input-wrapper {
     height: 50%;
+}
+
+.input-wrapper .label-input input {
+    width: 60%;
 }
 
 .label-input {
@@ -33,10 +38,6 @@ Form > div {
     justify-content: space-between;
     padding: 5px;
     align-items: center;
-}
-
-.col-sm-5 .col-sm-12 .label-input input {
-    width: 60%;
 }
 
 .col-sm-7 .label-input input {
@@ -71,7 +72,7 @@ Form > div {
 }
 
 @media (max-width: 768px) {
-    .col-sm-5 .col-sm-12 .label-input input {
+    .input-wrapper .label-input input {
         width: 75%;
     }
 
@@ -87,8 +88,8 @@ Form > div {
 /*table */
 
 .table {
-    width: calc(100% - 25px);
-    border: 1px solid black;
+    margin-left: -15px;
+    margin-right: 5px;
 }
 
 .col-name {
@@ -131,8 +132,8 @@ table.table-bordered > tbody > tr > td {
 td {
     position: relative;
     text-align: right;
-    padding-right: 3px;
-    padding-left: 3px;
+    /*  padding-right: 3px;
+      padding-left: 3px;*/
 }
 
 td input {
@@ -197,6 +198,17 @@ input::-webkit-inner-spin-button {
 
 .total-row {
     font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .col-name {
+        width: auto;
+    }
+
+    .table > thead > tr > th {
+        padding-right: 3px;
+        padding-left: 3px;
+    }
 }
 
 /*comment part*/
