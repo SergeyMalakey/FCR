@@ -9,162 +9,59 @@ body {
 Form > div {
     margin-bottom: 20px;
 }
-.form-part--inputs .row{      /*have to set height*/
+
+.form-part--inputs .row { /*have to set height*/
     height: 180px;
 }
-.col-sm-5,.col-xs-12,.col-sm-7 {
+
+.col-sm-5, .col-xs-12, .col-sm-7 {
     padding-right: 10px;
     padding-left: 10px;
     height: 100%;
 }
+
 .col-sm-12 {
-padding: 0;
-}
-
-.input-wrapper{
-    height: 50%;
-}
-.label-input {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px;
-    align-items: center;
-}
-
-.col-sm-12 .label-input input{
-    width: 60%;
-}
-.label-input input {
-    width: 75%;
-}
-
-.datepicker-wrapper {
-    width: 75%;
-
-}
-
-#customerWrapper {
-    position: relative;
-}
-
-.form-part--sign {
-    text-align: center;
-    background-color: red;
-    color: white;
-    padding: 8px;
-}
-
-#showList {
-    position: absolute;
-    right: 7px;
-    top: 13px;
-}
-
-.label-input label:before,
-.date-input label:before {
-    content: "*";
-    color: red;
-}
-
-/*.equal, .equal > div[class*='col-'] {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    flex:1 0 auto;
-}*/
-
-
-/*
-.form-part--inputs .right--side {
-    border: solid black 2px;
-    height: 100%;
-}
-*/
-
-/*.form-part {
-    display: flex;
-    flex-direction: column;
-}*/
-/*
-
-.form-control {
-    border-color: black;
-    border-radius: 0;
-}
-
-.form-part--sign {
-    text-align: center;
-    background-color: red;
-    color: white;
-    padding: 8px;
-}
-
-.form-part--inputs form {
-    display: flex;
-    flex-direction: column;
-}
-
-.left--side {
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.datepicker-wrapper {
-    width: 75%;
-}
-
-.label-input {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px;
-    align-items: center;
-}
-
-.label-input input {
-    width: 75%;
-}
-
-.right--side {
-    width: 37%;
-    display: flex;
-    flex-direction: column;
+    padding: 0;
 }
 
 .input-wrapper {
     height: 50%;
-    text-align: start;
 }
 
-.right--side .label-input input {
+.label-input {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    align-items: center;
+}
+
+.col-sm-5 .col-sm-12 .label-input input {
     width: 60%;
 }
 
-.top-side-wrapper {
-    display: flex;
-    justify-content: space-between;
+.col-sm-7 .label-input input {
+    width: 75%;
 }
 
-.bottom-part-wrapper {
-}
-
-.date-input {
-    padding: 5px; !* do not work*!
+.datepicker-wrapper {
+    width: 75%;
 }
 
 #customerWrapper {
     position: relative;
 }
 
+.form-part--sign {
+    text-align: center;
+    background-color: red;
+    color: white;
+    padding: 8px;
+}
+
 #showList {
     position: absolute;
     right: 7px;
-    top: 13px;
+    top: 17px;
 }
 
 .label-input label:before,
@@ -172,8 +69,20 @@ padding: 0;
     content: "*";
     color: red;
 }
-*/
 
+@media (max-width: 768px) {
+    .col-sm-5 .col-sm-12 .label-input input {
+        width: 75%;
+    }
+
+    .input-wrapper {
+        height: auto;
+    }
+
+    .col-sm-5, .col-xs-12, .col-sm-7 {
+        height: auto;
+    }
+}
 
 /*table */
 
@@ -292,7 +201,6 @@ input::-webkit-inner-spin-button {
 
 /*comment part*/
 
-
 .comment-part textarea {
     width: 100%;
 }
@@ -309,38 +217,20 @@ input::-webkit-inner-spin-button {
 }
 
 /*  bottom-part*/
+
 .bottom-part {
     display: flex;
-    justify-content: space-between;
-}
-
-.bottom-part--left-side {
-    width: 40%;
+    align-items: center;
 }
 
 .bottom-part--left-side div {
     display: flex;
     align-items: center;
-    margin: 5px;
-    width: 100%;
 }
 
-.bottom-part--left-side .form-control {
-    margin-left: 15px;
-    width: 50%;
-}
-
-.bottom-part--left-side div:before {
+.bottom-part--left-side div label:before {
     content: "*";
     color: red;
-}
-
-.bottom-part--right-side {
-    padding: 5px;
-}
-
-.bottom-part--right-side button {
-    margin: 3px;
 }
 
 .total-cost {

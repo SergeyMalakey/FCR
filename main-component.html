@@ -1,3 +1,4 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <div class="wrapper ">
     <!--<first-component></first-component>-->
     <span>{{vm.fcrForm.datepicker}}  this form valid: {{forminputs.$valid}}  <button ng-click="vm.test()">test</button></span>
@@ -7,12 +8,9 @@
             <div class="form-part--sign">
                 FCR
             </div>
-            <div class="form-part--inputs">    <!--  class="form-part&#45;&#45;inputs"-->
-                <div class="row"> <!--  lass="top-side-wrapper"-->
-
-
+            <div class="form-part--inputs">
+                <div class="row">
                     <div class="col-sm-7 col-xs-12 ">
-                        <!-- class="form-part&#45;&#45;inputs left&#45;&#45;side-->
                         <div class="label-input" id="customerWrapper">
                             <label for="customer">Customer</label>
                             <input id="customer" class="form-control" ng-model="vm.fcrForm.customerName" auto-complete
@@ -45,8 +43,6 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div class="col-sm-5 col-xs-12">
                         <!--class="form-part&#45;&#45;inputs right&#45;&#45;side-->
                         <div class="col-sm-12 input-wrapper">
@@ -63,13 +59,10 @@
                                        ng-required="true">
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-
-
         <div class="table-part">
             <table class="table table-bordered">
                 <thead class="thead-default">
@@ -116,24 +109,29 @@
             <div class="comment-part--sign">Comments</div>
             <textarea rows="6" ng-model="vm.fcrForm.comment" class="form-control"></textarea>
         </div>
-        <div class="bottom-part">
-            <div class="bottom-part--left-side">
-                <div>
-                    <label for="prepared">Prepared by: </label>
-                    <input id="prepared" name="prepared" class="form-control" type="text" placeholder="John Doe"
-                           ng-required="true" ng-model="vm.fcrForm.prepared">
+        <div class="bottom-part row">
+            <div class="bottom-part--left-side col-sm-4 col-md-3 col-xs-5">
+                <div class="row">
+                    <label for="prepared" class="col-sm-4 ">Prepared by: </label>
+                    <div class="col-sm-8">
+                        <input id="prepared" name="prepared" class="form-control" type="text"
+                               placeholder="John Doe"
+                               ng-required="true" ng-model="vm.fcrForm.prepared">
+                    </div>
                 </div>
             </div>
-            <div class="bottom-part--right-side">
-                <div class="total-cost">Total Cost: {{vm.fcrForm.totalPrice}}</div>
-                <div>
-                    <button class="btn btn-warning btn-sm">Download report</button>
-                    <button type="button" class="btn btn-warning btn-sm" ng-disabled="!forminputs.$valid"
-                            ng-click="vm.saveFcrForm()">Submit
-                    </button>
-                    <button type="button" class="btn btn-success btn-sm" ng-disabled="!forminputs.$valid"
-                            ng-click="vm.saveFcrForm()">Save
-                    </button>
+            <div class="bottom-part--right-side col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 col-xs-5 col-xs-offset-2 row">
+                <div class="total-cost col-sm-12">Total Cost: {{vm.fcrForm.totalPrice}}</div>
+                <div class="col-sm-12 ">
+                    <div class="pull-right">
+                        <button class="btn btn-warning btn-sm">Download report</button>
+                        <button type="button" class="btn btn-warning btn-sm " ng-disabled="!forminputs.$valid"
+                                ng-click="vm.saveFcrForm()">Submit
+                        </button>
+                        <button type="button" class="btn btn-success btn-sm" ng-disabled="!forminputs.$valid"
+                                ng-click="vm.saveFcrForm()">Save
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
