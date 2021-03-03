@@ -1,6 +1,5 @@
 (function () {
-    const app = angular.module("app1", ["app"]);
-    /*????*/
+    var app = angular.module("app");
 
     app.factory("AutocompleteFactory", [
         "$resource", function ($resource) {
@@ -21,7 +20,7 @@
     ]);
 
     app.component("mainComponent", {
-        templateUrl: "main-component.html",
+        templateUrl: "main-component/main-component.html",
         controller: "mainController",
         controllerAs: "vm",
     });
@@ -95,7 +94,7 @@
             vm.fetchFcrForm();
         };
     }]);
-
+    
     app.directive("oneEmployeeRow", function () {
 
         return {
@@ -108,9 +107,10 @@
                 employee: "=",
                 index: "=",
             },
-            templateUrl: "../one-employee-table-directive.html",
+            templateUrl: "one-employee-table-directive.html",
             controllerAs: "vm",
             controller: ["$scope", function ($scope) {
+
                 var vm = this;
 
                 vm.deleteEmployee = function (index) {
@@ -185,6 +185,4 @@
             }
         }
     }]);
-
-
 })()
