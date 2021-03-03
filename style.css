@@ -10,37 +10,27 @@ Form > div {
     margin-bottom: 20px;
 }
 
-.form-part {
-    display: flex;
-    flex-direction: column;
-}
-
 .form-control {
     border-color: black;
     border-radius: 0;
 }
 
-.form-part--sign {
-    text-align: center;
-    background-color: red;
-    color: white;
-    padding: 8px;
+.form-part--inputs .row { /*have to set height*/
+    height: 180px;
 }
 
-.form-part--inputs form {
-    display: flex;
-    flex-direction: column;
+.col-sm-5, .col-xs-12, .col-sm-7 {
+    padding-right: 10px;
+    padding-left: 10px;
+    height: 100%;
 }
 
-.left--side {
+.input-wrapper {
+    height: 50%;
+}
+
+.input-wrapper .label-input input {
     width: 60%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.datepicker-wrapper {
-    width: 75%;
 }
 
 .label-input {
@@ -50,45 +40,29 @@ Form > div {
     align-items: center;
 }
 
-.label-input input {
+.col-sm-7 .label-input input {
     width: 75%;
 }
 
-.right--side {
-    width: 37%;
-    display: flex;
-    flex-direction: column;
-}
-
-.input-wrapper {
-    height: 50%;
-    text-align: start;
-}
-
-.right--side .label-input input {
-    width: 60%;
-}
-
-.top-side-wrapper {
-    display: flex;
-    justify-content: space-between;
-}
-
-.bottom-part-wrapper {
-}
-
-.date-input {
-    padding: 5px; /* do not work*/
+.datepicker-wrapper {
+    width: 75%;
 }
 
 #customerWrapper {
     position: relative;
 }
 
+.form-part--sign {
+    text-align: center;
+    background-color: red;
+    color: white;
+    padding: 8px;
+}
+
 #showList {
     position: absolute;
     right: 7px;
-    top: 13px;
+    top: 17px;
 }
 
 .label-input label:before,
@@ -97,24 +71,43 @@ Form > div {
     color: red;
 }
 
-                                    /*table */
+@media (max-width: 768px) {
+    .input-wrapper .label-input input {
+        width: 75%;
+    }
+
+    .input-wrapper {
+        height: auto;
+    }
+
+    .col-sm-5, .col-xs-12, .col-sm-7 {
+        height: auto;
+    }
+}
+
+/*table */
 
 .table {
-    width: calc(100% - 25px);
-    border: 1px solid black;
+    margin-left: -15px;
+    margin-right: 5px;
 }
-.col-name{
+
+.col-name {
     width: 25%;
 }
-table.table-bordered{
-    border:1px solid black;
+
+table.table-bordered {
+    border: 1px solid black;
 }
-table.table-bordered > thead > tr > th{
-    border:1px solid black;
+
+table.table-bordered > thead > tr > th {
+    border: 1px solid black;
 }
-table.table-bordered > tbody > tr > td{
-    border:1px solid black;
+
+table.table-bordered > tbody > tr > td {
+    border: 1px solid black;
 }
+
 .table-sign {
     background-color: red;
     width: 100%;
@@ -139,8 +132,8 @@ table.table-bordered > tbody > tr > td{
 td {
     position: relative;
     text-align: right;
-    padding-right: 3px;
-    padding-left: 3px;
+    /*  padding-right: 3px;
+      padding-left: 3px;*/
 }
 
 td input {
@@ -207,8 +200,18 @@ input::-webkit-inner-spin-button {
     font-weight: bold;
 }
 
-                                    /*comment part*/
+@media (max-width: 768px) {
+    .col-name {
+        width: auto;
+    }
 
+    .table > thead > tr > th {
+        padding-right: 3px;
+        padding-left: 3px;
+    }
+}
+
+/*comment part*/
 
 .comment-part textarea {
     width: 100%;
@@ -224,39 +227,22 @@ input::-webkit-inner-spin-button {
     border-right: 1px black solid;
     padding: 8px;
 }
-                                      /*  bottom-part*/
+
+/*  bottom-part*/
+
 .bottom-part {
     display: flex;
-    justify-content: space-between;
-}
-
-.bottom-part--left-side {
-    width: 40%;
+    align-items: center;
 }
 
 .bottom-part--left-side div {
     display: flex;
     align-items: center;
-    margin: 5px;
-    width: 100%;
 }
 
-.bottom-part--left-side .form-control {
-    margin-left: 15px;
-    width: 50%;
-}
-
-.bottom-part--left-side div:before {
+.bottom-part--left-side div label:before {
     content: "*";
     color: red;
-}
-
-.bottom-part--right-side {
-    padding: 5px;
-}
-
-.bottom-part--right-side button {
-    margin: 3px;
 }
 
 .total-cost {
@@ -266,6 +252,7 @@ input::-webkit-inner-spin-button {
     padding-right: 30px;
     padding-bottom: 10px;
 }
+
 .btn:focus {
     outline: none;
 }
