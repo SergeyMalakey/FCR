@@ -1,6 +1,39 @@
 (function () {
     const app = angular.module("app", ["ngMockE2E", "ngResource"]);
-    
+
+    app.component("compTest", {
+        controller: "compCtrl",
+    })
+
+    app.controller("compCtrl", function () {
+        var vm = this
+
+        vm.info = "some info"
+    })
+
+    app.component("testComponent", {
+        /*require: {
+            ctrl: "compTest"
+        },*/
+        controller: "testCtrl",
+        controllerAs: "vm",
+        template: "<input ng-model='vm.obj.name'>{{vm.ctrl.info}}</input>",
+        /* require: "ngModel",*/
+
+    })
+    app.controller("testCtrl", function () {
+        var vm = this
+
+        vm.obj = {
+            name: "sss",
+            surname: "ddd"
+        }
+        vm.$onInit = function () {
+            debugger;
+        };
+    })
+
+
     app.run(function ($httpBackend) {
 
         let customers = ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"];

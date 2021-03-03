@@ -94,7 +94,7 @@
             vm.fetchFcrForm();
         };
     }]);
-    
+
     app.directive("oneEmployeeRow", function () {
 
         return {
@@ -177,7 +177,6 @@
                     }
                 });
                 $("#customer").click(function () {
-                    $scope.$apply()
                 });
                 $("#showList").click(function () {
                     $(element).autocomplete("search", "");
